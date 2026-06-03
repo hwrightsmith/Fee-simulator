@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AfN Fee Estimator</title>
+  <style>
+    :root {
+      --green:    #2d6a4f;
+      --green-lt: #52b788;
+      --green-bg: #d8f3dc;
+      --text:     #1b2b26;
+      --muted:    #52796f;
+      --border:   #b7e4c7;
+      --white:    #ffffff;
+      --surface:  #f8fffe;
+      --accent:   #1b4332;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--surface);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--green);
+      color: #fff;
+      padding: 20px 24px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    header svg { flex-shrink: 0; }
+    header h1 { font-size: 1.35rem; font-weight: 700; line-height: 1.2; }
+    header p  { font-size: 0.82rem; opacity: 0.82; margin-top: 2px; }
+
+    /* ── Layout ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+      display: grid;
+      gap: 20px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card h2 .step-badge {
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Form controls ── */
+    .field { margin-bottom: 14px; }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 5px;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    select:focus, input[type="number"]:focus {
+      border-color: var(--green-lt);
+      box-shadow: 0 0 0 3px rgba(82,183,136,0.18);
+    }
+
+    /* ── Toggle row ── */
+    .toggle-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .toggle-btn {
+      flex: 1;
+      min-width: 110px;
+      padding: 9px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .toggle-btn:hover { border-color: var(--green-lt); color: var(--green); }
+    .toggle-btn.active {
+      background: var(--green-bg);
+      border-color: var(--green-lt);
+      color: var(--accent);
+    }
+
+    /* ── Checkbox row ── */
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (max-width: 480px) { .check-grid { grid-template-columns: 1fr; } }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .check-item:hover { border-color: var(--green-lt); background: var(--green-bg); }
+    .check-item.checked { border-color: var(--green-lt); background: var(--green-bg); }
+    .check-item input[type="checkbox"] {
+      width: 16px; height: 16px;
+      margin-top: 1px;
+      accent-color: var(--green);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .check-item .ci-label { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .check-item .ci-note  { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── Results ── */
+    #results { display: none; }
+    .result-header {
+      background: var(--green);
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      padding: 14px 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .result-body { border-radius: 0 0 10px 10px; overflow: hidden; }
+    .result-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      background: var(--white);
+    }
+    .result-line:last-child { border-bottom: none; }
+    .result-line .rl-label { color: var(--text); }
+    .result-line .rl-sub   { font-size: 0.76rem; color: var(--muted); }
+    .result-line .rl-amt   { font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .result-line .rl-amt.neg { color: #999; font-weight: 400; font-size: 0.82rem; }
+    .result-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: var(--green-bg);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--accent);
+      border-top: 2px solid var(--green-lt);
+    }
+    .yr2-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: #f0faf4;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 10px;
+    }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 12px 14px;
+      line-height: 1.5;
+    }
+
+    /* ── CTA button ── */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 6px;
+    }
+    .btn-primary:hover { background: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+    <circle cx="20" cy="20" r="20" fill="rgba(255,255,255,0.15)"/>
+    <path d="M20 8C13.373 8 8 13.373 8 20s5.373 12 12 12 12-5.373 12-12S26.627 8 20 8z" fill="none" stroke="#fff" stroke-width="1.5"/>
+    <path d="M20 12v8l5 3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="20" cy="20" r="2" fill="#fff"/>
+  </svg>
+  <div>
+    <h1>Accounting for Nature® Fee Estimator</h1>
+    <p>Estimate your AfN fees · Version 4.3 · June 2026 · Fees in AUD (incl. GST where applicable)</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- Step 1: Organisation -->
+  <div class="card">
+    <h2><span class="step-badge">1</span>About Your Organisation</h2>
+
+    <div class="field">
+      <label>Organisation type</label>
+      <div class="toggle-row" id="org-type-toggle">
+        <button class="toggle-btn active" data-val="family">Individual / Family Farm</button>
+        <button class="toggle-btn" data-val="nfp">Not-for-Profit</button>
+        <button class="toggle-btn" data-val="fp">For-Profit</button>
+      </div>
+    </div>
+
+    <div class="field" id="size-field" style="display:none;">
+      <label>Organisation size (FTE)</label>
+      <div class="toggle-row" id="size-toggle">
+        <button class="toggle-btn active" data-val="small">Small (5–20 FTE)</button>
+        <button class="toggle-btn" data-val="medium">Medium (21–200 FTE)</button>
+        <button class="toggle-btn" data-val="large">Large (201+ FTE)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Services -->
+  <div class="card">
+    <h2><span class="step-badge">2</span>Services You Need</h2>
+    <div class="check-grid">
+      <label class="check-item checked" id="ci-registry">
+        <input type="checkbox" id="cb-registry" checked />
+        <div>
+          <div class="ci-label">EA Registry Listing</div>
+          <div class="ci-note">Annual · 1 environmental asset</div>
+        </div>
+      </label>
+      <label class="check-item" id="ci-tech">
+        <input type="checkbox" id="cb-tech" />
+        <div>
+          <div class="ci-label">Technical Assessment</div>
+          <div class="ci-note">AfN-Verified pathway</div>
+        </div>
+      </label>
+      <label class="check-item" id="ci-cert">
+        <input type="checkbox" id="cb-cert" />
+        <div>
+          <div class="ci-label">Initial Certification</div>
+          <div class="ci-note">Trustmark licence (year 1)</div>
+        </div>
+      </label>
+      <label class="check-item" id="ci-recert">
+        <input type="checkbox" id="cb-recert" />
+        <div>
+          <div class="ci-label">Recertification</div>
+          <div class="ci-note">Annual after initial cert year</div>
+        </div>
+      </label>
+      <label class="check-item" id="ci-extra-assets">
+        <input type="checkbox" id="cb-extra-assets" />
+        <div>
+          <div class="ci-label">Additional Asset Accounts</div>
+          <div class="ci-note">Per extra asset, per annum</div>
+        </div>
+      </label>
+      <label class="check-item" id="ci-portfolio">
+        <input type="checkbox" id="cb-portfolio" />
+        <div>
+          <div class="ci-label">Portfolio Registration</div>
+          <div class="ci-note">$510/yr flat rate</div>
+        </div>
+      </label>
+      <label class="check-item" id="ci-coaching">
+        <input type="checkbox" id="cb-coaching" />
+        <div>
+          <div class="ci-label">Coaching / Advisory</div>
+          <div class="ci-note">After free 3 hrs</div>
+        </div>
+      </label>
+      <label class="check-item" id="ci-expert">
+        <input type="checkbox" id="cb-expert" />
+        <div>
+          <div class="ci-label">Accredited Expert Registration</div>
+          <div class="ci-note">New registration application</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Conditional inputs -->
+    <div id="extra-assets-input" style="display:none; margin-top:14px;">
+      <div class="field">
+        <label>Number of additional asset accounts</label>
+        <input type="number" id="num-assets" min="1" max="50" value="1" />
+      </div>
+    </div>
+    <div id="coaching-input" style="display:none; margin-top:14px;">
+      <div class="field">
+        <label>Coaching hours needed (beyond free 3 hrs)</label>
+        <input type="number" id="coaching-hours" min="1" max="100" value="5" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Estimate button -->
+  <button class="btn-primary" onclick="calculate()">Calculate My Estimate →</button>
+
+  <!-- Results -->
+  <div id="results">
+    <div class="result-header">Your Fee Estimate</div>
+    <div class="result-body" id="result-lines"></div>
+    <div class="result-total">
+      <span>Estimated Total</span>
+      <span id="result-grand-total">$0</span>
+    </div>
+    <div class="yr2-note" id="yr2-note" style="display:none;"></div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Disclaimer:</strong> This estimator provides indicative figures based on the AfN Fee Schedule v4.3 (June 2026). All fees are in AUD and inclusive of government taxes where applicable. Fees do not include FX conversion charges or independent auditor fees (negotiated separately). Actual fees may vary — please confirm with AfN before making financial decisions. All fees paid are non-refundable.
+    <br><br>Contact AfN: <strong>feedback@accountingfornature.org</strong>
+  </div>
+
+</main>
+
+<script>
+  // ── Fee data ──────────────────────────────────────────────────────────────
+  const FEES = {
+    registry: {
+      family: 510,
+      nfp_small: 760, nfp_medium: 2250, nfp_large: 4150,
+      fp_small: 1140, fp_medium: 3520, fp_large: 6680
+    },
+    techAssessment: {
+      family: 1140,
+      nfp_small: 1900, nfp_medium: 1900, nfp_large: 3800,
+      fp_small: 2880, fp_medium: 3170, fp_large: 6330
+    },
+    initialCert: {
+      family: 960,
+      nfp_small: 1490, nfp_medium: null, nfp_large: null,
+      fp_small: 1730, fp_medium: null, fp_large: null
+    },
+    recert: {
+      family: 760,
+      nfp_small: 1140, nfp_medium: null, nfp_large: null,
+      fp_small: 1380, fp_medium: null, fp_large: null
+    },
+    extraAsset: {
+      family: 330,
+      nfp_small: 550, nfp_medium: 550, nfp_large: 550,
+      fp_small: 880, fp_medium: 880, fp_large: 880
+    },
+    coachingHourly: { family: 200, nfp: 200, fp: 290 },
+    portfolio: 510,
+    expertNew: 380
+  };
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let orgType = 'family';
+  let orgSize = 'small';
+
+  function feeKey() {
+    if (orgType === 'family') return 'family';
+    return `${orgType}_${orgSize}`;
+  }
+
+  function coachingRate() {
+    if (orgType === 'fp') return FEES.coachingHourly.fp;
+    return FEES.coachingHourly.nfp;
+  }
+
+  // ── Toggle buttons ────────────────────────────────────────────────────────
+  function bindToggles(groupId, onChange) {
+    const btns = document.querySelectorAll(`#${groupId} .toggle-btn`);
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        onChange(btn.dataset.val);
+      });
+    });
+  }
+
+  bindToggles('org-type-toggle', val => {
+    orgType = val;
+    document.getElementById('size-field').style.display = val === 'family' ? 'none' : '';
+    if (val === 'family') orgSize = 'small';
+  });
+
+  bindToggles('size-toggle', val => { orgSize = val; });
+
+  // ── Checkboxes ────────────────────────────────────────────────────────────
+  function bindCheckbox(cbId, ciId, inputId) {
+    const cb = document.getElementById(cbId);
+    const ci = document.getElementById(ciId);
+    const inp = inputId ? document.getElementById(inputId) : null;
+    ci.addEventListener('click', e => {
+      if (e.target !== cb) cb.checked = !cb.checked;
+      ci.classList.toggle('checked', cb.checked);
+      if (inp) inp.style.display = cb.checked ? '' : 'none';
+    });
+    cb.addEventListener('change', () => {
+      ci.classList.toggle('checked', cb.checked);
+      if (inp) inp.style.display = cb.checked ? '' : 'none';
+    });
+  }
+
+  bindCheckbox('cb-registry',     'ci-registry');
+  bindCheckbox('cb-tech',         'ci-tech');
+  bindCheckbox('cb-cert',         'ci-cert');
+  bindCheckbox('cb-recert',       'ci-recert');
+  bindCheckbox('cb-portfolio',    'ci-portfolio');
+  bindCheckbox('cb-expert',       'ci-expert');
+  bindCheckbox('cb-extra-assets', 'ci-extra-assets', 'extra-assets-input');
+  bindCheckbox('cb-coaching',     'ci-coaching',     'coaching-input');
+
+  // ── Calculate ─────────────────────────────────────────────────────────────
+  function fmt(n) {
+    if (n === null) return 'Contact AfN';
+    return '$' + n.toLocaleString('en-AU');
+  }
+
+  function addLine(lines, label, sub, amount) {
+    lines.push({ label, sub, amount });
+  }
+
+  function calculate() {
+    const key = feeKey();
+    const lines = [];
+    let total = 0;
+    let yr2Total = 0;
+
+    if (document.getElementById('cb-registry').checked) {
+      const amt = FEES.registry[key];
+      addLine(lines, 'EA Registry Fee', 'Annual · 1 environmental asset', amt);
+      total += amt; yr2Total += amt;
+    }
+
+    if (document.getElementById('cb-tech').checked) {
+      const amt = FEES.techAssessment[key];
+      addLine(lines, 'Technical Assessment Fee', 'Per asset account (AfN-Verified pathway)', amt);
+      total += amt;
+    }
+
+    if (document.getElementById('cb-cert').checked) {
+      const amt = FEES.initialCert[key];
+      if (amt === null) {
+        addLine(lines, 'Initial Certification Trustmark', 'Contact AfN for pricing', null);
+      } else {
+        addLine(lines, 'Initial Certification Trustmark', 'Year 1 licence fee', amt);
+        total += amt;
+      }
+    }
+
+    if (document.getElementById('cb-recert').checked) {
+      const amt = FEES.recert[key];
+      if (amt === null) {
+        addLine(lines, 'Recertification Trustmark', 'Contact AfN for pricing', null);
+      } else {
+        addLine(lines, 'Recertification Trustmark', 'Annual after initial cert year', amt);
+        total += amt; yr2Total += amt;
+      }
+    }
+
+    if (document.getElementById('cb-extra-assets').checked) {
+      const n = parseInt(document.getElementById('num-assets').value) || 1;
+      const rate = FEES.extraAsset[key];
+      const amt = rate * n;
+      addLine(lines, `Additional Asset Accounts (×${n})`, `${fmt(rate)} per asset per annum`, amt);
+      total += amt; yr2Total += amt;
+    }
+
+    if (document.getElementById('cb-portfolio').checked) {
+      addLine(lines, 'Portfolio Registration', 'Annual flat rate', FEES.portfolio);
+      total += FEES.portfolio; yr2Total += FEES.portfolio;
+    }
+
+    if (document.getElementById('cb-coaching').checked) {
+      const hrs = parseInt(document.getElementById('coaching-hours').value) || 1;
+      const rate = coachingRate();
+      const amt = rate * hrs;
+      addLine(lines, `Coaching / Advisory (${hrs} hrs)`, `${fmt(rate)}/hr (after 3 free hours)`, amt);
+      total += amt;
+    }
+
+    if (document.getElementById('cb-expert').checked) {
+      addLine(lines, 'Accredited Expert Registration', 'New application fee', FEES.expertNew);
+      total += FEES.expertNew;
+    }
+
+    // Render
+    const container = document.getElementById('result-lines');
+    container.innerHTML = '';
+    if (lines.length === 0) {
+      container.innerHTML = '<div class="result-line"><span class="rl-label" style="color:#999">Select at least one service above.</span></div>';
+      document.getElementById('result-grand-total').textContent = '$0';
+    } else {
+      lines.forEach(l => {
+        const div = document.createElement('div');
+        div.className = 'result-line';
+        div.innerHTML = `
+          <div>
+            <div class="rl-label">${l.label}</div>
+            <div class="rl-sub">${l.sub}</div>
+          </div>
+          <div class="rl-amt${l.amount === null ? ' neg' : ''}">${fmt(l.amount)}</div>
+        `;
+        container.appendChild(div);
+      });
+      document.getElementById('result-grand-total').textContent = fmt(total);
+    }
+
+    // Year 2 note
+    const yr2Note = document.getElementById('yr2-note');
+    if (yr2Total > 0) {
+      yr2Note.style.display = '';
+      yr2Note.innerHTML = `<strong>Ongoing annual cost (year 2+):</strong> Approximately ${fmt(yr2Total)} per year for recurring fees (registry, recertification, additional assets, and portfolio where selected).`;
+    } else {
+      yr2Note.style.display = 'none';
+    }
+
+    document.getElementById('results').style.display = '';
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
