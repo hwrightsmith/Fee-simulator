@@ -24,7 +24,6 @@
       min-height: 100vh;
     }
 
-    /* Header */
     header {
       background: var(--green);
       color: #fff;
@@ -37,7 +36,6 @@
     header h1 { font-size: 1.35rem; font-weight: 700; line-height: 1.2; }
     header p  { font-size: 0.82rem; opacity: 0.82; margin-top: 2px; }
 
-    /* Layout */
     main {
       max-width: 880px;
       margin: 0 auto;
@@ -46,7 +44,6 @@
       gap: 20px;
     }
 
-    /* Cards */
     .card {
       background: var(--white);
       border: 1px solid var(--border);
@@ -75,8 +72,7 @@
       flex-shrink: 0;
     }
 
-    /* Field */
-    .field { margin-bottom: 14px; }
+    .field { margin-bottom: 16px; }
     .field:last-child { margin-bottom: 0; }
     .field-label {
       display: block;
@@ -102,11 +98,10 @@
       box-shadow: 0 0 0 3px rgba(82,183,136,0.18);
     }
 
-    /* Toggle buttons */
     .toggle-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .toggle-btn {
       flex: 1;
-      min-width: 110px;
+      min-width: 80px;
       padding: 9px 14px;
       border: 1.5px solid var(--border);
       border-radius: 8px;
@@ -121,7 +116,58 @@
     .toggle-btn:hover { border-color: var(--green-lt); color: var(--green); }
     .toggle-btn.active { background: var(--green-bg); border-color: var(--green-lt); color: var(--accent); }
 
-    /* Category sections inside Step 2 */
+    /* Year presets row — smaller, fixed-width buttons */
+    .year-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .yr-btn {
+      padding: 8px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .yr-btn:hover { border-color: var(--green-lt); color: var(--green); }
+    .yr-btn.active { background: var(--green-bg); border-color: var(--green-lt); color: var(--accent); }
+    .yr-custom {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 4px;
+    }
+    .yr-custom input {
+      width: 64px;
+      padding: 8px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      text-align: center;
+    }
+    .yr-custom input:focus { border-color: var(--green-lt); box-shadow: 0 0 0 3px rgba(82,183,136,0.18); }
+    .yr-custom span { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+
+    /* Duration summary pill */
+    .duration-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-bg);
+      border: 1px solid var(--green-lt);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 10px;
+    }
+
     .cat-section { margin-bottom: 20px; }
     .cat-section:last-child { margin-bottom: 0; }
     .cat-title {
@@ -137,9 +183,7 @@
       align-items: center;
       gap: 7px;
     }
-    .cat-title svg { flex-shrink: 0; }
 
-    /* Checkbox tiles */
     .check-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -163,17 +207,21 @@
       width: 15px; height: 15px;
       margin-top: 2px;
       accent-color: var(--green);
-      cursor: pointer;
       flex-shrink: 0;
       pointer-events: none;
     }
     .ct-label { font-size: 0.87rem; font-weight: 600; color: var(--text); line-height: 1.3; }
     .ct-note  { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
 
-    /* Inline sub-input */
-    .sub-input { display: none; margin-top: 10px; padding: 12px; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+    .sub-input {
+      display: none;
+      margin-top: 10px;
+      padding: 12px;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
 
-    /* CTA */
     .btn-primary {
       display: block; width: 100%;
       padding: 14px;
@@ -187,11 +235,27 @@
 
     /* Results */
     #results { display: none; }
+    .result-box {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .result-box-header {
+      background: var(--green);
+      color: #fff;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .result-box-header .rbh-title { font-size: 0.95rem; font-weight: 700; }
+    .result-box-header .rbh-sub   { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
+
     .res-cat-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 18px;
+      padding: 9px 18px;
       background: var(--green-bg);
       font-size: 0.78rem;
       font-weight: 700;
@@ -200,6 +264,7 @@
       color: var(--green);
       border-bottom: 1px solid var(--border);
     }
+
     .result-line {
       display: flex;
       justify-content: space-between;
@@ -208,11 +273,17 @@
       border-bottom: 1px solid var(--border);
       font-size: 0.9rem;
       background: var(--white);
+      gap: 12px;
     }
+    .rl-left { flex: 1; min-width: 0; }
     .rl-label { color: var(--text); font-weight: 500; }
     .rl-sub   { font-size: 0.74rem; color: var(--muted); margin-top: 1px; }
+    .rl-right { text-align: right; flex-shrink: 0; }
+    .rl-working { font-size: 0.74rem; color: var(--muted); margin-bottom: 2px; }
     .rl-amt   { font-weight: 700; color: var(--accent); white-space: nowrap; }
     .rl-amt.contact { color: #999; font-weight: 400; font-size: 0.82rem; }
+    .rl-amt.zero    { color: #bbb; font-weight: 500; }
+
     .res-cat-subtotal {
       display: flex;
       justify-content: space-between;
@@ -224,6 +295,7 @@
       background: #f4faf6;
       border-bottom: 2px solid var(--border);
     }
+
     .result-grand {
       display: flex;
       justify-content: space-between;
@@ -234,29 +306,7 @@
       color: var(--accent);
       background: var(--green-bg);
     }
-    .result-box {
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .result-box-header {
-      background: var(--green);
-      color: #fff;
-      padding: 14px 18px;
-      font-size: 0.95rem;
-      font-weight: 700;
-    }
-    .yr2-note {
-      font-size: 0.8rem;
-      color: var(--muted);
-      background: #f0faf4;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 11px 14px;
-      line-height: 1.6;
-    }
 
-    /* Disclaimer */
     .disclaimer {
       font-size: 0.77rem;
       color: var(--muted);
@@ -284,7 +334,7 @@
 
 <main>
 
-  <!-- ── Step 1: Organisation ── -->
+  <!-- Step 1 -->
   <div class="card">
     <h2><span class="step-badge">1</span>About Your Organisation</h2>
 
@@ -305,9 +355,24 @@
         <button class="toggle-btn" data-val="large">Large · 201+ FTE</button>
       </div>
     </div>
+
+    <div class="field">
+      <span class="field-label">Estimate duration</span>
+      <div class="year-row">
+        <button class="yr-btn" data-yr="1">1 yr</button>
+        <button class="yr-btn" data-yr="2">2 yrs</button>
+        <button class="yr-btn" data-yr="3">3 yrs</button>
+        <button class="yr-btn active" data-yr="5">5 yrs</button>
+        <button class="yr-btn" data-yr="10">10 yrs</button>
+        <div class="yr-custom">
+          <input type="number" id="custom-years" min="1" max="50" placeholder="—" />
+          <span>custom</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- ── Step 2: Services by category ── -->
+  <!-- Step 2 -->
   <div class="card">
     <h2><span class="step-badge">2</span>Select the Services You Need</h2>
 
@@ -324,23 +389,23 @@
         </div>
         <div class="check-tile" data-cb="cb-tech">
           <input type="checkbox" id="cb-tech" />
-          <div><div class="ct-label">Technical Assessment</div><div class="ct-note">AfN-Verified pathway · per asset</div></div>
+          <div><div class="ct-label">Technical Assessment</div><div class="ct-note">One-off · AfN-Verified pathway · per asset</div></div>
         </div>
         <div class="check-tile" data-cb="cb-cert">
           <input type="checkbox" id="cb-cert" />
-          <div><div class="ct-label">Initial Certification</div><div class="ct-note">Trustmark licence · year 1</div></div>
+          <div><div class="ct-label">Initial Certification</div><div class="ct-note">One-off · Trustmark licence year 1</div></div>
         </div>
         <div class="check-tile" data-cb="cb-recert">
           <input type="checkbox" id="cb-recert" />
-          <div><div class="ct-label">Recertification</div><div class="ct-note">Annual after initial cert year</div></div>
+          <div><div class="ct-label">Recertification</div><div class="ct-note">Annual · from year 2 onwards</div></div>
         </div>
         <div class="check-tile" data-cb="cb-extra-assets">
           <input type="checkbox" id="cb-extra-assets" />
-          <div><div class="ct-label">Additional Asset Accounts</div><div class="ct-note">Per extra asset · per annum</div></div>
+          <div><div class="ct-label">Additional Asset Accounts</div><div class="ct-note">Annual · per extra asset</div></div>
         </div>
         <div class="check-tile" data-cb="cb-portfolio">
           <input type="checkbox" id="cb-portfolio" />
-          <div><div class="ct-label">Portfolio Registration</div><div class="ct-note">$510 flat rate · annual</div></div>
+          <div><div class="ct-label">Portfolio Registration</div><div class="ct-note">Annual · $510 flat rate</div></div>
         </div>
       </div>
       <div class="sub-input" id="sub-extra-assets">
@@ -360,27 +425,27 @@
       <div class="check-grid">
         <div class="check-tile" data-cb="cb-method-brief">
           <input type="checkbox" id="cb-method-brief" />
-          <div><div class="ct-label">Method Brief Submission</div><div class="ct-note">Formal notification of new Method intent</div></div>
+          <div><div class="ct-label">Method Brief Submission</div><div class="ct-note">One-off · formal notification fee</div></div>
         </div>
         <div class="check-tile" data-cb="cb-method-workshop">
           <input type="checkbox" id="cb-method-workshop" />
-          <div><div class="ct-label">Method Development Workshop</div><div class="ct-note">Optional · 60–90 min with ISC members</div></div>
+          <div><div class="ct-label">Method Development Workshop</div><div class="ct-note">One-off · optional · 60–90 min with ISC</div></div>
         </div>
         <div class="check-tile" data-cb="cb-preliminary">
           <input type="checkbox" id="cb-preliminary" />
-          <div><div class="ct-label">AfN Preliminary Assessment</div><div class="ct-note">Draft method review before ISC</div></div>
+          <div><div class="ct-label">AfN Preliminary Assessment</div><div class="ct-note">One-off · draft method review before ISC</div></div>
         </div>
         <div class="check-tile" data-cb="cb-scientific">
           <input type="checkbox" id="cb-scientific" />
-          <div><div class="ct-label">Scientific Review (Full Method)</div><div class="ct-note">ISC review · $3,950 flat</div></div>
+          <div><div class="ct-label">Scientific Review (Full Method)</div><div class="ct-note">One-off · ISC review · $3,950 flat</div></div>
         </div>
         <div class="check-tile" data-cb="cb-accreditation">
           <input type="checkbox" id="cb-accreditation" />
-          <div><div class="ct-label">Method Accreditation</div><div class="ct-note">On successful accreditation</div></div>
+          <div><div class="ct-label">Method Accreditation</div><div class="ct-note">One-off · on successful accreditation</div></div>
         </div>
         <div class="check-tile" data-cb="cb-method-assist">
           <input type="checkbox" id="cb-method-assist" />
-          <div><div class="ct-label">Method Technical Assistance</div><div class="ct-note">Hourly · after 3 free hours</div></div>
+          <div><div class="ct-label">Method Technical Assistance</div><div class="ct-note">One-off · hourly after 3 free hours</div></div>
         </div>
       </div>
       <div class="sub-input" id="sub-method-assist">
@@ -400,11 +465,11 @@
       <div class="check-grid">
         <div class="check-tile" data-cb="cb-expert-new">
           <input type="checkbox" id="cb-expert-new" />
-          <div><div class="ct-label">New Expert / Auditor Registration</div><div class="ct-note">One-off application fee · $380</div></div>
+          <div><div class="ct-label">New Expert / Auditor Registration</div><div class="ct-note">One-off · application fee</div></div>
         </div>
         <div class="check-tile" data-cb="cb-expert-renew">
           <input type="checkbox" id="cb-expert-renew" />
-          <div><div class="ct-label">Expert / Auditor Annual Renewal</div><div class="ct-note">Annual maintenance · $190/yr</div></div>
+          <div><div class="ct-label">Expert / Auditor Annual Renewal</div><div class="ct-note">Annual · from year 2 onwards</div></div>
         </div>
       </div>
     </div>
@@ -418,15 +483,15 @@
       <div class="check-grid">
         <div class="check-tile" data-cb="cb-coaching">
           <input type="checkbox" id="cb-coaching" />
-          <div><div class="ct-label">Technical Coaching / Advisory</div><div class="ct-note">Hourly · after 3 free hours</div></div>
+          <div><div class="ct-label">Technical Coaching / Advisory</div><div class="ct-note">One-off · hourly after 3 free hours</div></div>
         </div>
         <div class="check-tile" data-cb="cb-coaching-pkg">
           <input type="checkbox" id="cb-coaching-pkg" />
-          <div><div class="ct-label">8-Hour Coaching Package</div><div class="ct-note">Discounted block rate</div></div>
+          <div><div class="ct-label">8-Hour Coaching Package</div><div class="ct-note">One-off · discounted block rate</div></div>
         </div>
         <div class="check-tile" data-cb="cb-noncompliance">
           <input type="checkbox" id="cb-noncompliance" />
-          <div><div class="ct-label">Non-Compliance Process</div><div class="ct-note">Formal management of a non-compliant claim · $510</div></div>
+          <div><div class="ct-label">Non-Compliance Process</div><div class="ct-note">One-off · $510 flat</div></div>
         </div>
       </div>
       <div class="sub-input" id="sub-coaching">
@@ -439,61 +504,62 @@
 
   </div>
 
-  <!-- ── Calculate ── -->
   <button class="btn-primary" id="calc-btn">Calculate My Estimate →</button>
 
-  <!-- ── Results ── -->
+  <!-- Results -->
   <div id="results">
     <div class="result-box">
-      <div class="result-box-header">Your Fee Estimate</div>
+      <div class="result-box-header">
+        <div>
+          <div class="rbh-title" id="rbh-title">Fee Estimate</div>
+          <div class="rbh-sub" id="rbh-sub"></div>
+        </div>
+      </div>
       <div id="result-body"></div>
       <div class="result-grand">
-        <span>Estimated Total (AUD)</span>
+        <span id="grand-label">Estimated Total (AUD)</span>
         <span id="grand-total">$0</span>
       </div>
     </div>
-    <div class="yr2-note" id="yr2-note" style="display:none;"></div>
   </div>
 
   <div class="disclaimer">
-    <strong>Disclaimer:</strong> This estimator provides indicative figures based on the AfN Fee Schedule v4.3 (June 2026). All fees are in AUD and inclusive of applicable government taxes. Fees do not include FX conversion charges or independent auditor fees (negotiated directly with the auditor). Actual fees may vary — please confirm with AfN before making financial decisions. All fees paid are non-refundable.
+    <strong>Disclaimer:</strong> This estimator provides indicative figures based on the AfN Fee Schedule v4.3 (June 2026). All fees are in AUD and inclusive of applicable government taxes. Fees do not include FX conversion charges or independent auditor fees (negotiated directly with the auditor). Annual fees assume no fee changes over the estimate period — actual fees may be reviewed periodically. Actual fees may vary — please confirm with AfN before making financial decisions. All fees paid are non-refundable.
     <br><br>Contact AfN: <strong>feedback@accountingfornature.org</strong>
   </div>
 
 </main>
 
 <script>
-  // ── Fee tables ────────────────────────────────────────────────────────────
   const F = {
-    registry:     { family:510, nfp_small:760,  nfp_medium:2250, nfp_large:4150, fp_small:1140, fp_medium:3520, fp_large:6680 },
-    techAssess:   { family:1140,nfp_small:1900, nfp_medium:1900, nfp_large:3800, fp_small:2880, fp_medium:3170, fp_large:6330 },
-    initialCert:  { family:960, nfp_small:1490, nfp_medium:null, nfp_large:null, fp_small:1730, fp_medium:null, fp_large:null },
-    recert:       { family:760, nfp_small:1140, nfp_medium:null, nfp_large:null, fp_small:1380, fp_medium:null, fp_large:null },
-    extraAsset:   { family:330, nfp_small:550,  nfp_medium:550,  nfp_large:550,  fp_small:880,  fp_medium:880,  fp_large:880  },
-    methodBrief:  { nfp:595,  fp:595 },
-    methodWorkshop: 1020,
-    preliminary:  { nfp:570,  fp:760 },
-    scientific:   3950,
-    accreditation:{ nfp:590,  fp:870 },
-    methodAssist: { nfp:200,  fp:260 },
-    portfolio:    510,
-    expertNew:    380,
-    expertRenew:  190,
-    coaching:     { family:200, nfp:200, fp:290 },
-    coachingPkg:  { family:1440, nfp:1440, fp:2080 },
-    noncompliance:510,
+    registry:      { family:510,  nfp_small:760,  nfp_medium:2250, nfp_large:4150, fp_small:1140, fp_medium:3520, fp_large:6680 },
+    techAssess:    { family:1140, nfp_small:1900, nfp_medium:1900, nfp_large:3800, fp_small:2880, fp_medium:3170, fp_large:6330 },
+    initialCert:   { family:960,  nfp_small:1490, nfp_medium:null, nfp_large:null, fp_small:1730, fp_medium:null, fp_large:null },
+    recert:        { family:760,  nfp_small:1140, nfp_medium:null, nfp_large:null, fp_small:1380, fp_medium:null, fp_large:null },
+    extraAsset:    { family:330,  nfp_small:550,  nfp_medium:550,  nfp_large:550,  fp_small:880,  fp_medium:880,  fp_large:880  },
+    methodBrief:   { nfp:595,  fp:595  },
+    methodWorkshop:1020,
+    preliminary:   { nfp:570,  fp:760  },
+    scientific:    3950,
+    accreditation: { nfp:590,  fp:870  },
+    methodAssist:  { nfp:200,  fp:260  },
+    portfolio:     510,
+    expertNew:     380,
+    expertRenew:   190,
+    coaching:      { family:200, nfp:200, fp:290  },
+    coachingPkg:   { family:1440,nfp:1440,fp:2080 },
+    noncompliance: 510,
   };
 
-  // ── State ─────────────────────────────────────────────────────────────────
   let orgType = 'family';
   let orgSize = 'small';
+  let numYears = 5;
 
-  function key() {
-    return orgType === 'family' ? 'family' : `${orgType}_${orgSize}`;
-  }
-  function fpKey() { return orgType === 'fp' ? 'fp' : 'nfp'; }
+  function key()  { return orgType === 'family' ? 'family' : `${orgType}_${orgSize}`; }
+  function fpKey(){ return orgType === 'fp' ? 'fp' : 'nfp'; }
+  function cKey() { return orgType === 'fp' ? 'fp' : orgType === 'family' ? 'family' : 'nfp'; }
 
-  // ── Toggle buttons ────────────────────────────────────────────────────────
+  // Toggle buttons
   function wireToggles(groupId, cb) {
     document.querySelectorAll(`#${groupId} .toggle-btn`).forEach(btn => {
       btn.addEventListener('click', () => {
@@ -503,7 +569,6 @@
       });
     });
   }
-
   wireToggles('org-type-toggle', val => {
     orgType = val;
     document.getElementById('size-field').style.display = val === 'family' ? 'none' : 'block';
@@ -511,40 +576,95 @@
   });
   wireToggles('size-toggle', val => { orgSize = val; });
 
-  // ── Checkbox tiles ────────────────────────────────────────────────────────
+  // Year preset buttons
+  const yrBtns = document.querySelectorAll('.yr-btn');
+  const customYrInput = document.getElementById('custom-years');
+
+  yrBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      yrBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      numYears = parseInt(btn.dataset.yr);
+      customYrInput.value = '';
+    });
+  });
+
+  customYrInput.addEventListener('input', () => {
+    const v = parseInt(customYrInput.value);
+    if (v >= 1) {
+      yrBtns.forEach(b => b.classList.remove('active'));
+      numYears = v;
+    }
+  });
+
+  // Checkbox tiles
   document.querySelectorAll('.check-tile').forEach(tile => {
     tile.addEventListener('click', () => {
       const cb = tile.querySelector('input[type="checkbox"]');
       cb.checked = !cb.checked;
       tile.classList.toggle('active', cb.checked);
-      // show/hide sub-inputs
       const subId = tile.dataset.cb.replace('cb-', 'sub-');
       const sub = document.getElementById(subId);
       if (sub) sub.style.display = cb.checked ? 'block' : 'none';
     });
   });
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
   function checked(id) { return document.getElementById(id).checked; }
   function numVal(id)  { return Math.max(1, parseInt(document.getElementById(id).value) || 1); }
-  function fmt(n) { return n === null ? 'Contact AfN' : '$' + n.toLocaleString('en-AU'); }
+  function fmt(n)      { return n === null ? 'Contact AfN' : '$' + n.toLocaleString('en-AU'); }
 
-  function makeRow(label, sub, amount) {
+  // Fee type constants
+  const ONCE   = 'once';
+  const ANNUAL = 'annual';    // × numYears
+  const FROM_Y2 = 'from_y2'; // × max(0, numYears - 1)
+
+  function applyYears(rate, type) {
+    if (rate === null) return null;
+    if (type === ONCE)   return rate;
+    if (type === ANNUAL) return rate * numYears;
+    if (type === FROM_Y2) return rate * Math.max(0, numYears - 1);
+    return rate;
+  }
+
+  function workingNote(rate, type) {
+    if (rate === null) return '';
+    if (type === ONCE) return `${fmt(rate)} · one-off`;
+    if (type === ANNUAL) {
+      if (numYears === 1) return `${fmt(rate)}/yr × 1 year`;
+      return `${fmt(rate)}/yr × ${numYears} years`;
+    }
+    if (type === FROM_Y2) {
+      const yrs = Math.max(0, numYears - 1);
+      if (yrs === 0) return `${fmt(rate)}/yr · not applicable in year 1`;
+      if (yrs === 1) return `${fmt(rate)}/yr × 1 year (year 2)`;
+      return `${fmt(rate)}/yr × ${yrs} years (years 2–${numYears})`;
+    }
+    return '';
+  }
+
+  function makeRow(label, sub, rate, type) {
+    const total = applyYears(rate, type);
+    const working = workingNote(rate, type);
+    const isContact = total === null;
+    const isZero = total === 0;
     const div = document.createElement('div');
     div.className = 'result-line';
     div.innerHTML = `
-      <div>
+      <div class="rl-left">
         <div class="rl-label">${label}</div>
         ${sub ? `<div class="rl-sub">${sub}</div>` : ''}
       </div>
-      <div class="rl-amt${amount === null ? ' contact' : ''}">${fmt(amount)}</div>`;
-    return div;
+      <div class="rl-right">
+        ${working ? `<div class="rl-working">${working}</div>` : ''}
+        <div class="rl-amt${isContact ? ' contact' : isZero ? ' zero' : ''}">${isContact ? 'Contact AfN' : fmt(total)}</div>
+      </div>`;
+    return { el: div, total: typeof total === 'number' ? total : 0 };
   }
 
   function makeCatHeader(icon, title) {
     const div = document.createElement('div');
     div.className = 'res-cat-header';
-    div.innerHTML = `${icon} ${title}`;
+    div.innerHTML = `${icon}&nbsp; ${title}`;
     return div;
   }
 
@@ -555,16 +675,15 @@
     return div;
   }
 
-  // ── Calculate ─────────────────────────────────────────────────────────────
   document.getElementById('calc-btn').addEventListener('click', () => {
-    const k = key();
+    const k  = key();
     const fk = fpKey();
+    const ck = cKey();
     const body = document.getElementById('result-body');
     body.innerHTML = '';
 
     let grandTotal = 0;
-    let yr2Total   = 0;
-    let hasAny     = false;
+    let hasAny = false;
 
     function addCat(icon, title, buildLines) {
       const lines = buildLines();
@@ -572,93 +691,73 @@
       hasAny = true;
       body.appendChild(makeCatHeader(icon, title));
       let catTotal = 0;
-      lines.forEach(([label, sub, amt, isRecurring]) => {
-        body.appendChild(makeRow(label, sub, amt));
-        if (typeof amt === 'number') { catTotal += amt; grandTotal += amt; }
-        if (isRecurring && typeof amt === 'number') yr2Total += amt;
+      lines.forEach(({ el, total }) => {
+        body.appendChild(el);
+        catTotal += total;
+        grandTotal += total;
       });
       body.appendChild(makeCatSubtotal(catTotal));
     }
 
-    // Environmental Account
     addCat('🌿', 'Environmental Account', () => {
-      const lines = [];
-      if (checked('cb-registry')) {
-        const a = F.registry[k];
-        lines.push(['EA Registry Fee', 'Annual · 1 environmental asset', a, true]);
-      }
-      if (checked('cb-tech')) {
-        lines.push(['Technical Assessment', 'AfN-Verified pathway · per asset', F.techAssess[k], false]);
-      }
-      if (checked('cb-cert')) {
-        const a = F.initialCert[k];
-        lines.push(['Initial Certification Trustmark', 'Year 1 licence fee', a, false]);
-      }
-      if (checked('cb-recert')) {
-        const a = F.recert[k];
-        lines.push(['Recertification Trustmark', 'Annual after initial cert year', a, true]);
-      }
+      const rows = [];
+      if (checked('cb-registry'))
+        rows.push(makeRow('EA Registry Fee', 'Annual · 1 environmental asset', F.registry[k], ANNUAL));
+      if (checked('cb-tech'))
+        rows.push(makeRow('Technical Assessment', 'AfN-Verified pathway · per asset', F.techAssess[k], ONCE));
+      if (checked('cb-cert'))
+        rows.push(makeRow('Initial Certification Trustmark', 'Trustmark licence · year 1', F.initialCert[k], ONCE));
+      if (checked('cb-recert'))
+        rows.push(makeRow('Recertification Trustmark', 'Annual from year 2', F.recert[k], FROM_Y2));
       if (checked('cb-extra-assets')) {
         const n = numVal('num-assets');
-        const rate = F.extraAsset[k];
-        lines.push([`Additional Asset Accounts ×${n}`, `${fmt(rate)} per asset · per annum`, rate * n, true]);
+        const rate = F.extraAsset[k] * n;
+        rows.push(makeRow(`Additional Asset Accounts ×${n}`, `${fmt(F.extraAsset[k])} per asset · annual`, rate, ANNUAL));
       }
-      if (checked('cb-portfolio')) {
-        lines.push(['Portfolio Registration', 'Annual flat rate', F.portfolio, true]);
-      }
-      return lines;
+      if (checked('cb-portfolio'))
+        rows.push(makeRow('Portfolio Registration', 'Annual flat rate', F.portfolio, ANNUAL));
+      return rows;
     });
 
-    // Methods
     addCat('📋', 'Methods', () => {
-      const lines = [];
-      if (checked('cb-method-brief')) {
-        lines.push(['Method Brief Submission', 'Formal notification fee', F.methodBrief[fk], false]);
-      }
-      if (checked('cb-method-workshop')) {
-        lines.push(['Method Development Workshop', '60–90 min with ISC members (optional)', F.methodWorkshop, false]);
-      }
-      if (checked('cb-preliminary')) {
-        lines.push(['AfN Preliminary Assessment', 'Draft method · includes 1 follow-up review', F.preliminary[fk], false]);
-      }
-      if (checked('cb-scientific')) {
-        lines.push(['Scientific Review (Full Method)', 'ISC review · 2-hr meeting + follow-up', F.scientific, false]);
-      }
-      if (checked('cb-accreditation')) {
-        lines.push(['Method Accreditation', 'Administration + 3 yr minor update coverage', F.accreditation[fk], false]);
-      }
+      const rows = [];
+      if (checked('cb-method-brief'))
+        rows.push(makeRow('Method Brief Submission', 'Formal notification fee', F.methodBrief[fk], ONCE));
+      if (checked('cb-method-workshop'))
+        rows.push(makeRow('Method Development Workshop', '60–90 min with ISC members (optional)', F.methodWorkshop, ONCE));
+      if (checked('cb-preliminary'))
+        rows.push(makeRow('AfN Preliminary Assessment', 'Draft method · includes 1 follow-up review', F.preliminary[fk], ONCE));
+      if (checked('cb-scientific'))
+        rows.push(makeRow('Scientific Review (Full Method)', 'ISC review · 2-hr meeting + follow-up', F.scientific, ONCE));
+      if (checked('cb-accreditation'))
+        rows.push(makeRow('Method Accreditation', 'Administration + 3-yr minor update coverage', F.accreditation[fk], ONCE));
       if (checked('cb-method-assist')) {
         const hrs = numVal('method-assist-hours');
-        const rate = F.methodAssist[fk];
-        lines.push([`Method Technical Assistance ×${hrs} hrs`, `${fmt(rate)}/hr after 3 free hours`, rate * hrs, false]);
+        rows.push(makeRow(`Method Technical Assistance ×${hrs} hrs`, `${fmt(F.methodAssist[fk])}/hr after 3 free hours`, F.methodAssist[fk] * hrs, ONCE));
       }
-      return lines;
+      return rows;
     });
 
-    // Experts & Auditors
     addCat('👤', 'Experts &amp; Auditors', () => {
-      const lines = [];
-      if (checked('cb-expert-new'))   lines.push(['New Expert / Auditor Registration', 'One-off application', F.expertNew, false]);
-      if (checked('cb-expert-renew')) lines.push(['Expert / Auditor Annual Renewal', 'Annual maintenance fee', F.expertRenew, true]);
-      return lines;
+      const rows = [];
+      if (checked('cb-expert-new'))
+        rows.push(makeRow('New Expert / Auditor Registration', 'One-off application fee', F.expertNew, ONCE));
+      if (checked('cb-expert-renew'))
+        rows.push(makeRow('Expert / Auditor Annual Renewal', 'Annual from year 2', F.expertRenew, FROM_Y2));
+      return rows;
     });
 
-    // Coaching & Training
     addCat('💬', 'Coaching &amp; Training', () => {
-      const lines = [];
+      const rows = [];
       if (checked('cb-coaching')) {
         const hrs = numVal('coaching-hours');
-        const rate = F.coaching[orgType === 'fp' ? 'fp' : orgType === 'family' ? 'family' : 'nfp'];
-        lines.push([`Technical Coaching ×${hrs} hrs`, `${fmt(rate)}/hr after 3 free hours`, rate * hrs, false]);
+        rows.push(makeRow(`Technical Coaching ×${hrs} hrs`, `${fmt(F.coaching[ck])}/hr after 3 free hours`, F.coaching[ck] * hrs, ONCE));
       }
-      if (checked('cb-coaching-pkg')) {
-        const rate = F.coachingPkg[orgType === 'fp' ? 'fp' : orgType === 'family' ? 'family' : 'nfp'];
-        lines.push(['8-Hour Coaching Package', 'Discounted block rate', rate, false]);
-      }
-      if (checked('cb-noncompliance')) {
-        lines.push(['Non-Compliance Process', 'Formal management of non-compliant claim', F.noncompliance, false]);
-      }
-      return lines;
+      if (checked('cb-coaching-pkg'))
+        rows.push(makeRow('8-Hour Coaching Package', 'Discounted block rate', F.coachingPkg[ck], ONCE));
+      if (checked('cb-noncompliance'))
+        rows.push(makeRow('Non-Compliance Process', 'Formal management of non-compliant claim', F.noncompliance, ONCE));
+      return rows;
     });
 
     if (!hasAny) {
@@ -668,13 +767,11 @@
       document.getElementById('grand-total').textContent = fmt(grandTotal);
     }
 
-    const yr2Note = document.getElementById('yr2-note');
-    if (yr2Total > 0) {
-      yr2Note.style.display = 'block';
-      yr2Note.innerHTML = `<strong>Estimated ongoing annual cost (year 2+):</strong> Approximately ${fmt(yr2Total)} per year — covering recurring fees such as EA Registry, Recertification, additional assets, portfolio maintenance, and expert renewal where selected.`;
-    } else {
-      yr2Note.style.display = 'none';
-    }
+    const yrsLabel = numYears === 1 ? '1-Year' : `${numYears}-Year`;
+    document.getElementById('rbh-title').textContent = `${yrsLabel} Fee Estimate`;
+    document.getElementById('rbh-sub').textContent =
+      `Includes one-off fees + annual fees projected over ${numYears} year${numYears > 1 ? 's' : ''}`;
+    document.getElementById('grand-label').textContent = `Estimated ${yrsLabel} Total (AUD)`;
 
     document.getElementById('results').style.display = 'block';
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
