@@ -16,9 +16,7 @@
       --surface:  #f8fffe;
       --accent:   #1b4332;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--surface);
@@ -26,7 +24,7 @@
       min-height: 100vh;
     }
 
-    /* ── Header ── */
+    /* Header */
     header {
       background: var(--green);
       color: #fff;
@@ -39,54 +37,57 @@
     header h1 { font-size: 1.35rem; font-weight: 700; line-height: 1.2; }
     header p  { font-size: 0.82rem; opacity: 0.82; margin-top: 2px; }
 
-    /* ── Layout ── */
+    /* Layout */
     main {
-      max-width: 860px;
+      max-width: 880px;
       margin: 0 auto;
       padding: 28px 16px 60px;
       display: grid;
       gap: 20px;
     }
 
-    /* ── Cards ── */
+    /* Cards */
     .card {
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 22px 24px;
     }
-    .card h2 {
+    .card > h2 {
       font-size: 1rem;
       font-weight: 700;
       color: var(--accent);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .card h2 .step-badge {
+    .step-badge {
       background: var(--green);
       color: #fff;
       border-radius: 50%;
       width: 24px; height: 24px;
-      display: flex; align-items: center; justify-content: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.75rem;
       font-weight: 700;
       flex-shrink: 0;
     }
 
-    /* ── Form controls ── */
+    /* Field */
     .field { margin-bottom: 14px; }
-    label {
+    .field:last-child { margin-bottom: 0; }
+    .field-label {
       display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 5px;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
     }
-    select, input[type="number"] {
+    input[type="number"] {
       width: 100%;
       padding: 10px 12px;
       border: 1px solid var(--border);
@@ -95,19 +96,14 @@
       color: var(--text);
       background: var(--white);
       outline: none;
-      transition: border-color 0.15s;
     }
-    select:focus, input[type="number"]:focus {
+    input[type="number"]:focus {
       border-color: var(--green-lt);
       box-shadow: 0 0 0 3px rgba(82,183,136,0.18);
     }
 
-    /* ── Toggle row ── */
-    .toggle-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    /* Toggle buttons */
+    .toggle-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .toggle-btn {
       flex: 1;
       min-width: 110px;
@@ -123,20 +119,34 @@
       transition: all 0.15s;
     }
     .toggle-btn:hover { border-color: var(--green-lt); color: var(--green); }
-    .toggle-btn.active {
-      background: var(--green-bg);
-      border-color: var(--green-lt);
-      color: var(--accent);
-    }
+    .toggle-btn.active { background: var(--green-bg); border-color: var(--green-lt); color: var(--accent); }
 
-    /* ── Checkbox row ── */
+    /* Category sections inside Step 2 */
+    .cat-section { margin-bottom: 20px; }
+    .cat-section:last-child { margin-bottom: 0; }
+    .cat-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--green);
+      padding: 6px 0 8px;
+      border-bottom: 1.5px solid var(--green-bg);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .cat-title svg { flex-shrink: 0; }
+
+    /* Checkbox tiles */
     .check-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
     }
-    @media (max-width: 480px) { .check-grid { grid-template-columns: 1fr; } }
-    .check-item {
+    @media (max-width: 520px) { .check-grid { grid-template-columns: 1fr; } }
+    .check-tile {
       display: flex;
       align-items: flex-start;
       gap: 9px;
@@ -145,54 +155,96 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.15s;
+      user-select: none;
     }
-    .check-item:hover { border-color: var(--green-lt); background: var(--green-bg); }
-    .check-item.checked { border-color: var(--green-lt); background: var(--green-bg); }
-    .check-item input[type="checkbox"] {
-      width: 16px; height: 16px;
-      margin-top: 1px;
+    .check-tile:hover { border-color: var(--green-lt); background: var(--green-bg); }
+    .check-tile.active { border-color: var(--green-lt); background: var(--green-bg); }
+    .check-tile input[type="checkbox"] {
+      width: 15px; height: 15px;
+      margin-top: 2px;
       accent-color: var(--green);
       cursor: pointer;
       flex-shrink: 0;
+      pointer-events: none;
     }
-    .check-item .ci-label { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.3; }
-    .check-item .ci-note  { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+    .ct-label { font-size: 0.87rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .ct-note  { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
 
-    /* ── Results ── */
-    #results { display: none; }
-    .result-header {
-      background: var(--green);
-      color: #fff;
-      border-radius: 10px 10px 0 0;
-      padding: 14px 20px;
-      font-size: 0.9rem;
-      font-weight: 700;
+    /* Inline sub-input */
+    .sub-input { display: none; margin-top: 10px; padding: 12px; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+
+    /* CTA */
+    .btn-primary {
+      display: block; width: 100%;
+      padding: 14px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
     }
-    .result-body { border-radius: 0 0 10px 10px; overflow: hidden; }
+    .btn-primary:hover { background: var(--accent); }
+
+    /* Results */
+    #results { display: none; }
+    .res-cat-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--green-bg);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--green);
+      border-bottom: 1px solid var(--border);
+    }
     .result-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 11px 20px;
+      padding: 11px 18px;
       border-bottom: 1px solid var(--border);
       font-size: 0.9rem;
       background: var(--white);
     }
-    .result-line:last-child { border-bottom: none; }
-    .result-line .rl-label { color: var(--text); }
-    .result-line .rl-sub   { font-size: 0.76rem; color: var(--muted); }
-    .result-line .rl-amt   { font-weight: 700; color: var(--accent); white-space: nowrap; }
-    .result-line .rl-amt.neg { color: #999; font-weight: 400; font-size: 0.82rem; }
-    .result-total {
+    .rl-label { color: var(--text); font-weight: 500; }
+    .rl-sub   { font-size: 0.74rem; color: var(--muted); margin-top: 1px; }
+    .rl-amt   { font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .rl-amt.contact { color: #999; font-weight: 400; font-size: 0.82rem; }
+    .res-cat-subtotal {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 20px;
-      background: var(--green-bg);
-      font-size: 1.05rem;
+      padding: 9px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: #f4faf6;
+      border-bottom: 2px solid var(--border);
+    }
+    .result-grand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--accent);
-      border-top: 2px solid var(--green-lt);
+      background: var(--green-bg);
+    }
+    .result-box {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .result-box-header {
+      background: var(--green);
+      color: #fff;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-weight: 700;
     }
     .yr2-note {
       font-size: 0.8rem;
@@ -200,61 +252,44 @@
       background: #f0faf4;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px 14px;
-      margin-top: 10px;
+      padding: 11px 14px;
+      line-height: 1.6;
     }
 
-    /* ── Disclaimer ── */
+    /* Disclaimer */
     .disclaimer {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--muted);
       background: #f5f5f5;
       border-radius: 8px;
-      padding: 12px 14px;
-      line-height: 1.5;
+      padding: 13px 15px;
+      line-height: 1.6;
     }
-
-    /* ── CTA button ── */
-    .btn-primary {
-      display: block;
-      width: 100%;
-      padding: 13px;
-      background: var(--green);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.15s;
-      margin-top: 6px;
-    }
-    .btn-primary:hover { background: var(--accent); }
   </style>
 </head>
 <body>
 
 <header>
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-    <circle cx="20" cy="20" r="20" fill="rgba(255,255,255,0.15)"/>
-    <path d="M20 8C13.373 8 8 13.373 8 20s5.373 12 12 12 12-5.373 12-12S26.627 8 20 8z" fill="none" stroke="#fff" stroke-width="1.5"/>
-    <path d="M20 12v8l5 3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="20" cy="20" r="2" fill="#fff"/>
+  <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+    <circle cx="21" cy="21" r="21" fill="rgba(255,255,255,0.12)"/>
+    <path d="M21 10C14.925 10 10 14.925 10 21s4.925 11 11 11 11-4.925 11-11S27.075 10 21 10z" fill="none" stroke="#fff" stroke-width="1.5"/>
+    <path d="M15 26c1.5-3 3.5-5 6-5s4.5 2 6 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="21" cy="17" r="2.5" fill="#fff"/>
   </svg>
   <div>
     <h1>Accounting for Nature® Fee Estimator</h1>
-    <p>Estimate your AfN fees · Version 4.3 · June 2026 · Fees in AUD (incl. GST where applicable)</p>
+    <p>Estimate your AfN fees · Fee Schedule v4.3 · June 2026 · All fees in AUD (incl. GST where applicable)</p>
   </div>
 </header>
 
 <main>
 
-  <!-- Step 1: Organisation -->
+  <!-- ── Step 1: Organisation ── -->
   <div class="card">
     <h2><span class="step-badge">1</span>About Your Organisation</h2>
 
     <div class="field">
-      <label>Organisation type</label>
+      <span class="field-label">Organisation type</span>
       <div class="toggle-row" id="org-type-toggle">
         <button class="toggle-btn active" data-val="family">Individual / Family Farm</button>
         <button class="toggle-btn" data-val="nfp">Not-for-Profit</button>
@@ -263,313 +298,387 @@
     </div>
 
     <div class="field" id="size-field" style="display:none;">
-      <label>Organisation size (FTE)</label>
+      <span class="field-label">Organisation size</span>
       <div class="toggle-row" id="size-toggle">
-        <button class="toggle-btn active" data-val="small">Small (5–20 FTE)</button>
-        <button class="toggle-btn" data-val="medium">Medium (21–200 FTE)</button>
-        <button class="toggle-btn" data-val="large">Large (201+ FTE)</button>
+        <button class="toggle-btn active" data-val="small">Small · 5–20 FTE</button>
+        <button class="toggle-btn" data-val="medium">Medium · 21–200 FTE</button>
+        <button class="toggle-btn" data-val="large">Large · 201+ FTE</button>
       </div>
     </div>
   </div>
 
-  <!-- Step 2: Services -->
+  <!-- ── Step 2: Services by category ── -->
   <div class="card">
-    <h2><span class="step-badge">2</span>Services You Need</h2>
-    <div class="check-grid">
-      <label class="check-item checked" id="ci-registry">
-        <input type="checkbox" id="cb-registry" checked />
-        <div>
-          <div class="ci-label">EA Registry Listing</div>
-          <div class="ci-note">Annual · 1 environmental asset</div>
+    <h2><span class="step-badge">2</span>Select the Services You Need</h2>
+
+    <!-- Environmental Account -->
+    <div class="cat-section">
+      <div class="cat-title">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L2 4v6l5 3 5-3V4L7 1z" stroke="#2d6a4f" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Environmental Account
+      </div>
+      <div class="check-grid">
+        <div class="check-tile active" data-cb="cb-registry">
+          <input type="checkbox" id="cb-registry" checked />
+          <div><div class="ct-label">EA Registry Listing</div><div class="ct-note">Annual · 1 environmental asset included</div></div>
         </div>
-      </label>
-      <label class="check-item" id="ci-tech">
-        <input type="checkbox" id="cb-tech" />
-        <div>
-          <div class="ci-label">Technical Assessment</div>
-          <div class="ci-note">AfN-Verified pathway</div>
+        <div class="check-tile" data-cb="cb-tech">
+          <input type="checkbox" id="cb-tech" />
+          <div><div class="ct-label">Technical Assessment</div><div class="ct-note">AfN-Verified pathway · per asset</div></div>
         </div>
-      </label>
-      <label class="check-item" id="ci-cert">
-        <input type="checkbox" id="cb-cert" />
-        <div>
-          <div class="ci-label">Initial Certification</div>
-          <div class="ci-note">Trustmark licence (year 1)</div>
+        <div class="check-tile" data-cb="cb-cert">
+          <input type="checkbox" id="cb-cert" />
+          <div><div class="ct-label">Initial Certification</div><div class="ct-note">Trustmark licence · year 1</div></div>
         </div>
-      </label>
-      <label class="check-item" id="ci-recert">
-        <input type="checkbox" id="cb-recert" />
-        <div>
-          <div class="ci-label">Recertification</div>
-          <div class="ci-note">Annual after initial cert year</div>
+        <div class="check-tile" data-cb="cb-recert">
+          <input type="checkbox" id="cb-recert" />
+          <div><div class="ct-label">Recertification</div><div class="ct-note">Annual after initial cert year</div></div>
         </div>
-      </label>
-      <label class="check-item" id="ci-extra-assets">
-        <input type="checkbox" id="cb-extra-assets" />
-        <div>
-          <div class="ci-label">Additional Asset Accounts</div>
-          <div class="ci-note">Per extra asset, per annum</div>
+        <div class="check-tile" data-cb="cb-extra-assets">
+          <input type="checkbox" id="cb-extra-assets" />
+          <div><div class="ct-label">Additional Asset Accounts</div><div class="ct-note">Per extra asset · per annum</div></div>
         </div>
-      </label>
-      <label class="check-item" id="ci-portfolio">
-        <input type="checkbox" id="cb-portfolio" />
-        <div>
-          <div class="ci-label">Portfolio Registration</div>
-          <div class="ci-note">$510/yr flat rate</div>
+        <div class="check-tile" data-cb="cb-portfolio">
+          <input type="checkbox" id="cb-portfolio" />
+          <div><div class="ct-label">Portfolio Registration</div><div class="ct-note">$510 flat rate · annual</div></div>
         </div>
-      </label>
-      <label class="check-item" id="ci-coaching">
-        <input type="checkbox" id="cb-coaching" />
-        <div>
-          <div class="ci-label">Coaching / Advisory</div>
-          <div class="ci-note">After free 3 hrs</div>
+      </div>
+      <div class="sub-input" id="sub-extra-assets">
+        <div class="field">
+          <span class="field-label">Number of additional asset accounts</span>
+          <input type="number" id="num-assets" min="1" max="50" value="1" />
         </div>
-      </label>
-      <label class="check-item" id="ci-expert">
-        <input type="checkbox" id="cb-expert" />
-        <div>
-          <div class="ci-label">Accredited Expert Registration</div>
-          <div class="ci-note">New registration application</div>
-        </div>
-      </label>
+      </div>
     </div>
 
-    <!-- Conditional inputs -->
-    <div id="extra-assets-input" style="display:none; margin-top:14px;">
-      <div class="field">
-        <label>Number of additional asset accounts</label>
-        <input type="number" id="num-assets" min="1" max="50" value="1" />
+    <!-- Methods -->
+    <div class="cat-section">
+      <div class="cat-title">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3h10M2 7h7M2 11h5" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Methods
+      </div>
+      <div class="check-grid">
+        <div class="check-tile" data-cb="cb-method-brief">
+          <input type="checkbox" id="cb-method-brief" />
+          <div><div class="ct-label">Method Brief Submission</div><div class="ct-note">Formal notification of new Method intent</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-method-workshop">
+          <input type="checkbox" id="cb-method-workshop" />
+          <div><div class="ct-label">Method Development Workshop</div><div class="ct-note">Optional · 60–90 min with ISC members</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-preliminary">
+          <input type="checkbox" id="cb-preliminary" />
+          <div><div class="ct-label">AfN Preliminary Assessment</div><div class="ct-note">Draft method review before ISC</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-scientific">
+          <input type="checkbox" id="cb-scientific" />
+          <div><div class="ct-label">Scientific Review (Full Method)</div><div class="ct-note">ISC review · $3,950 flat</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-accreditation">
+          <input type="checkbox" id="cb-accreditation" />
+          <div><div class="ct-label">Method Accreditation</div><div class="ct-note">On successful accreditation</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-method-assist">
+          <input type="checkbox" id="cb-method-assist" />
+          <div><div class="ct-label">Method Technical Assistance</div><div class="ct-note">Hourly · after 3 free hours</div></div>
+        </div>
+      </div>
+      <div class="sub-input" id="sub-method-assist">
+        <div class="field">
+          <span class="field-label">Hours needed (beyond 3 free hours)</span>
+          <input type="number" id="method-assist-hours" min="1" max="200" value="5" />
+        </div>
       </div>
     </div>
-    <div id="coaching-input" style="display:none; margin-top:14px;">
-      <div class="field">
-        <label>Coaching hours needed (beyond free 3 hrs)</label>
-        <input type="number" id="coaching-hours" min="1" max="100" value="5" />
+
+    <!-- Experts & Auditors -->
+    <div class="cat-section">
+      <div class="cat-title">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="3" stroke="#2d6a4f" stroke-width="1.4"/><path d="M2 12c0-2.761 2.239-4 5-4s5 1.239 5 4" stroke="#2d6a4f" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Experts &amp; Auditors
+      </div>
+      <div class="check-grid">
+        <div class="check-tile" data-cb="cb-expert-new">
+          <input type="checkbox" id="cb-expert-new" />
+          <div><div class="ct-label">New Expert / Auditor Registration</div><div class="ct-note">One-off application fee · $380</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-expert-renew">
+          <input type="checkbox" id="cb-expert-renew" />
+          <div><div class="ct-label">Expert / Auditor Annual Renewal</div><div class="ct-note">Annual maintenance · $190/yr</div></div>
+        </div>
       </div>
     </div>
+
+    <!-- Coaching & Training -->
+    <div class="cat-section">
+      <div class="cat-title">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2h10v7H8l-3 3V9H2V2z" stroke="#2d6a4f" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Coaching &amp; Training
+      </div>
+      <div class="check-grid">
+        <div class="check-tile" data-cb="cb-coaching">
+          <input type="checkbox" id="cb-coaching" />
+          <div><div class="ct-label">Technical Coaching / Advisory</div><div class="ct-note">Hourly · after 3 free hours</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-coaching-pkg">
+          <input type="checkbox" id="cb-coaching-pkg" />
+          <div><div class="ct-label">8-Hour Coaching Package</div><div class="ct-note">Discounted block rate</div></div>
+        </div>
+        <div class="check-tile" data-cb="cb-noncompliance">
+          <input type="checkbox" id="cb-noncompliance" />
+          <div><div class="ct-label">Non-Compliance Process</div><div class="ct-note">Formal management of a non-compliant claim · $510</div></div>
+        </div>
+      </div>
+      <div class="sub-input" id="sub-coaching">
+        <div class="field">
+          <span class="field-label">Hours needed (beyond 3 free hours)</span>
+          <input type="number" id="coaching-hours" min="1" max="200" value="5" />
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Estimate button -->
-  <button class="btn-primary" onclick="calculate()">Calculate My Estimate →</button>
+  <!-- ── Calculate ── -->
+  <button class="btn-primary" id="calc-btn">Calculate My Estimate →</button>
 
-  <!-- Results -->
+  <!-- ── Results ── -->
   <div id="results">
-    <div class="result-header">Your Fee Estimate</div>
-    <div class="result-body" id="result-lines"></div>
-    <div class="result-total">
-      <span>Estimated Total</span>
-      <span id="result-grand-total">$0</span>
+    <div class="result-box">
+      <div class="result-box-header">Your Fee Estimate</div>
+      <div id="result-body"></div>
+      <div class="result-grand">
+        <span>Estimated Total (AUD)</span>
+        <span id="grand-total">$0</span>
+      </div>
     </div>
     <div class="yr2-note" id="yr2-note" style="display:none;"></div>
   </div>
 
   <div class="disclaimer">
-    <strong>Disclaimer:</strong> This estimator provides indicative figures based on the AfN Fee Schedule v4.3 (June 2026). All fees are in AUD and inclusive of government taxes where applicable. Fees do not include FX conversion charges or independent auditor fees (negotiated separately). Actual fees may vary — please confirm with AfN before making financial decisions. All fees paid are non-refundable.
+    <strong>Disclaimer:</strong> This estimator provides indicative figures based on the AfN Fee Schedule v4.3 (June 2026). All fees are in AUD and inclusive of applicable government taxes. Fees do not include FX conversion charges or independent auditor fees (negotiated directly with the auditor). Actual fees may vary — please confirm with AfN before making financial decisions. All fees paid are non-refundable.
     <br><br>Contact AfN: <strong>feedback@accountingfornature.org</strong>
   </div>
 
 </main>
 
 <script>
-  // ── Fee data ──────────────────────────────────────────────────────────────
-  const FEES = {
-    registry: {
-      family: 510,
-      nfp_small: 760, nfp_medium: 2250, nfp_large: 4150,
-      fp_small: 1140, fp_medium: 3520, fp_large: 6680
-    },
-    techAssessment: {
-      family: 1140,
-      nfp_small: 1900, nfp_medium: 1900, nfp_large: 3800,
-      fp_small: 2880, fp_medium: 3170, fp_large: 6330
-    },
-    initialCert: {
-      family: 960,
-      nfp_small: 1490, nfp_medium: null, nfp_large: null,
-      fp_small: 1730, fp_medium: null, fp_large: null
-    },
-    recert: {
-      family: 760,
-      nfp_small: 1140, nfp_medium: null, nfp_large: null,
-      fp_small: 1380, fp_medium: null, fp_large: null
-    },
-    extraAsset: {
-      family: 330,
-      nfp_small: 550, nfp_medium: 550, nfp_large: 550,
-      fp_small: 880, fp_medium: 880, fp_large: 880
-    },
-    coachingHourly: { family: 200, nfp: 200, fp: 290 },
-    portfolio: 510,
-    expertNew: 380
+  // ── Fee tables ────────────────────────────────────────────────────────────
+  const F = {
+    registry:     { family:510, nfp_small:760,  nfp_medium:2250, nfp_large:4150, fp_small:1140, fp_medium:3520, fp_large:6680 },
+    techAssess:   { family:1140,nfp_small:1900, nfp_medium:1900, nfp_large:3800, fp_small:2880, fp_medium:3170, fp_large:6330 },
+    initialCert:  { family:960, nfp_small:1490, nfp_medium:null, nfp_large:null, fp_small:1730, fp_medium:null, fp_large:null },
+    recert:       { family:760, nfp_small:1140, nfp_medium:null, nfp_large:null, fp_small:1380, fp_medium:null, fp_large:null },
+    extraAsset:   { family:330, nfp_small:550,  nfp_medium:550,  nfp_large:550,  fp_small:880,  fp_medium:880,  fp_large:880  },
+    methodBrief:  { nfp:595,  fp:595 },
+    methodWorkshop: 1020,
+    preliminary:  { nfp:570,  fp:760 },
+    scientific:   3950,
+    accreditation:{ nfp:590,  fp:870 },
+    methodAssist: { nfp:200,  fp:260 },
+    portfolio:    510,
+    expertNew:    380,
+    expertRenew:  190,
+    coaching:     { family:200, nfp:200, fp:290 },
+    coachingPkg:  { family:1440, nfp:1440, fp:2080 },
+    noncompliance:510,
   };
 
   // ── State ─────────────────────────────────────────────────────────────────
   let orgType = 'family';
   let orgSize = 'small';
 
-  function feeKey() {
-    if (orgType === 'family') return 'family';
-    return `${orgType}_${orgSize}`;
+  function key() {
+    return orgType === 'family' ? 'family' : `${orgType}_${orgSize}`;
   }
-
-  function coachingRate() {
-    if (orgType === 'fp') return FEES.coachingHourly.fp;
-    return FEES.coachingHourly.nfp;
-  }
+  function fpKey() { return orgType === 'fp' ? 'fp' : 'nfp'; }
 
   // ── Toggle buttons ────────────────────────────────────────────────────────
-  function bindToggles(groupId, onChange) {
-    const btns = document.querySelectorAll(`#${groupId} .toggle-btn`);
-    btns.forEach(btn => {
+  function wireToggles(groupId, cb) {
+    document.querySelectorAll(`#${groupId} .toggle-btn`).forEach(btn => {
       btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
+        document.querySelectorAll(`#${groupId} .toggle-btn`).forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        onChange(btn.dataset.val);
+        cb(btn.dataset.val);
       });
     });
   }
 
-  bindToggles('org-type-toggle', val => {
+  wireToggles('org-type-toggle', val => {
     orgType = val;
-    document.getElementById('size-field').style.display = val === 'family' ? 'none' : '';
+    document.getElementById('size-field').style.display = val === 'family' ? 'none' : 'block';
     if (val === 'family') orgSize = 'small';
   });
+  wireToggles('size-toggle', val => { orgSize = val; });
 
-  bindToggles('size-toggle', val => { orgSize = val; });
+  // ── Checkbox tiles ────────────────────────────────────────────────────────
+  document.querySelectorAll('.check-tile').forEach(tile => {
+    tile.addEventListener('click', () => {
+      const cb = tile.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      tile.classList.toggle('active', cb.checked);
+      // show/hide sub-inputs
+      const subId = tile.dataset.cb.replace('cb-', 'sub-');
+      const sub = document.getElementById(subId);
+      if (sub) sub.style.display = cb.checked ? 'block' : 'none';
+    });
+  });
 
-  // ── Checkboxes ────────────────────────────────────────────────────────────
-  function bindCheckbox(cbId, ciId, inputId) {
-    const cb = document.getElementById(cbId);
-    const ci = document.getElementById(ciId);
-    const inp = inputId ? document.getElementById(inputId) : null;
-    ci.addEventListener('click', e => {
-      if (e.target !== cb) cb.checked = !cb.checked;
-      ci.classList.toggle('checked', cb.checked);
-      if (inp) inp.style.display = cb.checked ? '' : 'none';
-    });
-    cb.addEventListener('change', () => {
-      ci.classList.toggle('checked', cb.checked);
-      if (inp) inp.style.display = cb.checked ? '' : 'none';
-    });
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function checked(id) { return document.getElementById(id).checked; }
+  function numVal(id)  { return Math.max(1, parseInt(document.getElementById(id).value) || 1); }
+  function fmt(n) { return n === null ? 'Contact AfN' : '$' + n.toLocaleString('en-AU'); }
+
+  function makeRow(label, sub, amount) {
+    const div = document.createElement('div');
+    div.className = 'result-line';
+    div.innerHTML = `
+      <div>
+        <div class="rl-label">${label}</div>
+        ${sub ? `<div class="rl-sub">${sub}</div>` : ''}
+      </div>
+      <div class="rl-amt${amount === null ? ' contact' : ''}">${fmt(amount)}</div>`;
+    return div;
   }
 
-  bindCheckbox('cb-registry',     'ci-registry');
-  bindCheckbox('cb-tech',         'ci-tech');
-  bindCheckbox('cb-cert',         'ci-cert');
-  bindCheckbox('cb-recert',       'ci-recert');
-  bindCheckbox('cb-portfolio',    'ci-portfolio');
-  bindCheckbox('cb-expert',       'ci-expert');
-  bindCheckbox('cb-extra-assets', 'ci-extra-assets', 'extra-assets-input');
-  bindCheckbox('cb-coaching',     'ci-coaching',     'coaching-input');
+  function makeCatHeader(icon, title) {
+    const div = document.createElement('div');
+    div.className = 'res-cat-header';
+    div.innerHTML = `${icon} ${title}`;
+    return div;
+  }
+
+  function makeCatSubtotal(total) {
+    const div = document.createElement('div');
+    div.className = 'res-cat-subtotal';
+    div.innerHTML = `<span>Category subtotal</span><span>${fmt(total)}</span>`;
+    return div;
+  }
 
   // ── Calculate ─────────────────────────────────────────────────────────────
-  function fmt(n) {
-    if (n === null) return 'Contact AfN';
-    return '$' + n.toLocaleString('en-AU');
-  }
+  document.getElementById('calc-btn').addEventListener('click', () => {
+    const k = key();
+    const fk = fpKey();
+    const body = document.getElementById('result-body');
+    body.innerHTML = '';
 
-  function addLine(lines, label, sub, amount) {
-    lines.push({ label, sub, amount });
-  }
+    let grandTotal = 0;
+    let yr2Total   = 0;
+    let hasAny     = false;
 
-  function calculate() {
-    const key = feeKey();
-    const lines = [];
-    let total = 0;
-    let yr2Total = 0;
-
-    if (document.getElementById('cb-registry').checked) {
-      const amt = FEES.registry[key];
-      addLine(lines, 'EA Registry Fee', 'Annual · 1 environmental asset', amt);
-      total += amt; yr2Total += amt;
-    }
-
-    if (document.getElementById('cb-tech').checked) {
-      const amt = FEES.techAssessment[key];
-      addLine(lines, 'Technical Assessment Fee', 'Per asset account (AfN-Verified pathway)', amt);
-      total += amt;
-    }
-
-    if (document.getElementById('cb-cert').checked) {
-      const amt = FEES.initialCert[key];
-      if (amt === null) {
-        addLine(lines, 'Initial Certification Trustmark', 'Contact AfN for pricing', null);
-      } else {
-        addLine(lines, 'Initial Certification Trustmark', 'Year 1 licence fee', amt);
-        total += amt;
-      }
-    }
-
-    if (document.getElementById('cb-recert').checked) {
-      const amt = FEES.recert[key];
-      if (amt === null) {
-        addLine(lines, 'Recertification Trustmark', 'Contact AfN for pricing', null);
-      } else {
-        addLine(lines, 'Recertification Trustmark', 'Annual after initial cert year', amt);
-        total += amt; yr2Total += amt;
-      }
-    }
-
-    if (document.getElementById('cb-extra-assets').checked) {
-      const n = parseInt(document.getElementById('num-assets').value) || 1;
-      const rate = FEES.extraAsset[key];
-      const amt = rate * n;
-      addLine(lines, `Additional Asset Accounts (×${n})`, `${fmt(rate)} per asset per annum`, amt);
-      total += amt; yr2Total += amt;
-    }
-
-    if (document.getElementById('cb-portfolio').checked) {
-      addLine(lines, 'Portfolio Registration', 'Annual flat rate', FEES.portfolio);
-      total += FEES.portfolio; yr2Total += FEES.portfolio;
-    }
-
-    if (document.getElementById('cb-coaching').checked) {
-      const hrs = parseInt(document.getElementById('coaching-hours').value) || 1;
-      const rate = coachingRate();
-      const amt = rate * hrs;
-      addLine(lines, `Coaching / Advisory (${hrs} hrs)`, `${fmt(rate)}/hr (after 3 free hours)`, amt);
-      total += amt;
-    }
-
-    if (document.getElementById('cb-expert').checked) {
-      addLine(lines, 'Accredited Expert Registration', 'New application fee', FEES.expertNew);
-      total += FEES.expertNew;
-    }
-
-    // Render
-    const container = document.getElementById('result-lines');
-    container.innerHTML = '';
-    if (lines.length === 0) {
-      container.innerHTML = '<div class="result-line"><span class="rl-label" style="color:#999">Select at least one service above.</span></div>';
-      document.getElementById('result-grand-total').textContent = '$0';
-    } else {
-      lines.forEach(l => {
-        const div = document.createElement('div');
-        div.className = 'result-line';
-        div.innerHTML = `
-          <div>
-            <div class="rl-label">${l.label}</div>
-            <div class="rl-sub">${l.sub}</div>
-          </div>
-          <div class="rl-amt${l.amount === null ? ' neg' : ''}">${fmt(l.amount)}</div>
-        `;
-        container.appendChild(div);
+    function addCat(icon, title, buildLines) {
+      const lines = buildLines();
+      if (!lines.length) return;
+      hasAny = true;
+      body.appendChild(makeCatHeader(icon, title));
+      let catTotal = 0;
+      lines.forEach(([label, sub, amt, isRecurring]) => {
+        body.appendChild(makeRow(label, sub, amt));
+        if (typeof amt === 'number') { catTotal += amt; grandTotal += amt; }
+        if (isRecurring && typeof amt === 'number') yr2Total += amt;
       });
-      document.getElementById('result-grand-total').textContent = fmt(total);
+      body.appendChild(makeCatSubtotal(catTotal));
     }
 
-    // Year 2 note
+    // Environmental Account
+    addCat('🌿', 'Environmental Account', () => {
+      const lines = [];
+      if (checked('cb-registry')) {
+        const a = F.registry[k];
+        lines.push(['EA Registry Fee', 'Annual · 1 environmental asset', a, true]);
+      }
+      if (checked('cb-tech')) {
+        lines.push(['Technical Assessment', 'AfN-Verified pathway · per asset', F.techAssess[k], false]);
+      }
+      if (checked('cb-cert')) {
+        const a = F.initialCert[k];
+        lines.push(['Initial Certification Trustmark', 'Year 1 licence fee', a, false]);
+      }
+      if (checked('cb-recert')) {
+        const a = F.recert[k];
+        lines.push(['Recertification Trustmark', 'Annual after initial cert year', a, true]);
+      }
+      if (checked('cb-extra-assets')) {
+        const n = numVal('num-assets');
+        const rate = F.extraAsset[k];
+        lines.push([`Additional Asset Accounts ×${n}`, `${fmt(rate)} per asset · per annum`, rate * n, true]);
+      }
+      if (checked('cb-portfolio')) {
+        lines.push(['Portfolio Registration', 'Annual flat rate', F.portfolio, true]);
+      }
+      return lines;
+    });
+
+    // Methods
+    addCat('📋', 'Methods', () => {
+      const lines = [];
+      if (checked('cb-method-brief')) {
+        lines.push(['Method Brief Submission', 'Formal notification fee', F.methodBrief[fk], false]);
+      }
+      if (checked('cb-method-workshop')) {
+        lines.push(['Method Development Workshop', '60–90 min with ISC members (optional)', F.methodWorkshop, false]);
+      }
+      if (checked('cb-preliminary')) {
+        lines.push(['AfN Preliminary Assessment', 'Draft method · includes 1 follow-up review', F.preliminary[fk], false]);
+      }
+      if (checked('cb-scientific')) {
+        lines.push(['Scientific Review (Full Method)', 'ISC review · 2-hr meeting + follow-up', F.scientific, false]);
+      }
+      if (checked('cb-accreditation')) {
+        lines.push(['Method Accreditation', 'Administration + 3 yr minor update coverage', F.accreditation[fk], false]);
+      }
+      if (checked('cb-method-assist')) {
+        const hrs = numVal('method-assist-hours');
+        const rate = F.methodAssist[fk];
+        lines.push([`Method Technical Assistance ×${hrs} hrs`, `${fmt(rate)}/hr after 3 free hours`, rate * hrs, false]);
+      }
+      return lines;
+    });
+
+    // Experts & Auditors
+    addCat('👤', 'Experts &amp; Auditors', () => {
+      const lines = [];
+      if (checked('cb-expert-new'))   lines.push(['New Expert / Auditor Registration', 'One-off application', F.expertNew, false]);
+      if (checked('cb-expert-renew')) lines.push(['Expert / Auditor Annual Renewal', 'Annual maintenance fee', F.expertRenew, true]);
+      return lines;
+    });
+
+    // Coaching & Training
+    addCat('💬', 'Coaching &amp; Training', () => {
+      const lines = [];
+      if (checked('cb-coaching')) {
+        const hrs = numVal('coaching-hours');
+        const rate = F.coaching[orgType === 'fp' ? 'fp' : orgType === 'family' ? 'family' : 'nfp'];
+        lines.push([`Technical Coaching ×${hrs} hrs`, `${fmt(rate)}/hr after 3 free hours`, rate * hrs, false]);
+      }
+      if (checked('cb-coaching-pkg')) {
+        const rate = F.coachingPkg[orgType === 'fp' ? 'fp' : orgType === 'family' ? 'family' : 'nfp'];
+        lines.push(['8-Hour Coaching Package', 'Discounted block rate', rate, false]);
+      }
+      if (checked('cb-noncompliance')) {
+        lines.push(['Non-Compliance Process', 'Formal management of non-compliant claim', F.noncompliance, false]);
+      }
+      return lines;
+    });
+
+    if (!hasAny) {
+      body.innerHTML = '<div class="result-line"><span class="rl-label" style="color:#aaa">Select at least one service above to see your estimate.</span></div>';
+      document.getElementById('grand-total').textContent = '$0';
+    } else {
+      document.getElementById('grand-total').textContent = fmt(grandTotal);
+    }
+
     const yr2Note = document.getElementById('yr2-note');
     if (yr2Total > 0) {
-      yr2Note.style.display = '';
-      yr2Note.innerHTML = `<strong>Ongoing annual cost (year 2+):</strong> Approximately ${fmt(yr2Total)} per year for recurring fees (registry, recertification, additional assets, and portfolio where selected).`;
+      yr2Note.style.display = 'block';
+      yr2Note.innerHTML = `<strong>Estimated ongoing annual cost (year 2+):</strong> Approximately ${fmt(yr2Total)} per year — covering recurring fees such as EA Registry, Recertification, additional assets, portfolio maintenance, and expert renewal where selected.`;
     } else {
       yr2Note.style.display = 'none';
     }
 
-    document.getElementById('results').style.display = '';
+    document.getElementById('results').style.display = 'block';
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  });
 </script>
 </body>
 </html>
